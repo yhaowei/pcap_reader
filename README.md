@@ -14,13 +14,17 @@ G++ 15.2.0 and python 3.12.12 are used
 
 ## 3.	how to compile your code,
 
-```if cmake works then run in powershell
+```
+If cmake works on Windows then run bellow 2 lines in powershell
+
 cmake -S . -B build
 cmake --build build
 ```
 
 
-```or build with raw g++ command
+```
+Also can build with bellow raw g++ command
+
 Remove-Item -Recurse -Force build -ErrorAction SilentlyContinue
 New-Item -ItemType Directory -Force build\source, build\test | Out-Null
 $flags = "-std=c++17", "-Isource", "-Wall", "-Wextra", "-O2"
@@ -41,23 +45,31 @@ g++ $flags test/test_pcap_io.cpp build/source/libmbo_core.a -o build/test/test_p
 
 ## 4.	how to run your program,
 
-``` With Python GUI
+```
+Run with Python GUI
+
 specify json file
-specify pcap file/folder
-click 'Compute IAP/IAV' 
+specify single pcap file/folder
+click button 'Compute IAP/IAV' 
 ```
 
-``` with Command line
+```
+Run with Command line
+
 Please refer Command line section bellow
 ```
 
 ## 5.	anything else that you believe we should know.
 
 ```
-it should support Multiple PCAPs and Large PCAPs
+It supports loading multiple PCAPs files and large PCAP files
+
 Loading progress is visible
-Besides CSV file, IAP/IAV result is visible on Python GUI
+
+Besides CSV file, IAP/IAV result is also visible on Python GUI
+
 The latest order book will be displayed When sybmol selected
+
 There are test cases created for venue load funtion, pcap load function and calculation function
 ```
 
