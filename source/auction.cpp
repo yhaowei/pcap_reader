@@ -210,24 +210,25 @@ std::vector<AuctionResult> compute_all_auctions(
     uint32_t channel_filter) {
     std::vector<AuctionResult> results;
 
-    for (const auto& [symbol, book] : books.books()) {
-        (void)book;
+    const std::vector<std::string> symbols = channel_filter != 0
+                                                 ? venue.stock_symbols_for_channel(channel_filter)
+                                                 : venue.all_stock_symbols();
+
+    results.reserve(symbols.size());
+    for (const std::string& symbol : symbols) {
         const VenueInstrument* inst = venue.find(symbol);
-        if (!inst) {
-            continue;
-        }
-        if (channel_filter != 0 && inst->multicast_group != channel_filter) {
+        if (inst == nullptr || !inst->is_stock()) {
             continue;
         }
         const IssueOrderBook* b = books.find_book(symbol);
-        if (!b) {
-            continue;
+        if (b != nullptr) {
+            results.push_back(compute_indicative_auction(symbol, *b, inst));
+        } else {
+            AuctionResult empty;
+            empty.symbol = symbol;
+            results.push_back(empty);
         }
-        results.push_back(compute_indicative_auction(symbol, *b, inst));
     }
 
-    std::sort(results.begin(), results.end(), [](const AuctionResult& a, const AuctionResult& b) {
-        return a.symbol < b.symbol;
-    });
     return results;
 }

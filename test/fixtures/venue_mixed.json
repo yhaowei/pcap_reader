@@ -1,0 +1,46 @@
+{
+  "LoadTypes": [
+    {
+      "TseFullInstrument": {
+        "exchSymbol": "TEST",
+        "platform": "Default",
+        "multicastGroupChannelId": 51,
+        "tickSizeTable": 3,
+        "unitOfTrading": 100,
+        "basePrice": 100,
+        "maxPrice": 150,
+        "minPrice": 50,
+        "businessDay": "20241105",
+        "securityType": "01"
+      }
+    },
+    {
+      "TseFullInstrument": {
+        "exchSymbol": "ALT",
+        "platform": "Default",
+        "multicastGroupChannelId": 51,
+        "tickSizeTable": 3,
+        "unitOfTrading": 100,
+        "basePrice": 200,
+        "maxPrice": 300,
+        "minPrice": 100,
+        "businessDay": "20241105",
+        "securityType": "02"
+      }
+    },
+    {
+      "TseFullInstrument": {
+        "exchSymbol": "BOND",
+        "platform": "Default",
+        "multicastGroupChannelId": 51,
+        "tickSizeTable": 3,
+        "unitOfTrading": 1,
+        "basePrice": 100,
+        "maxPrice": 150,
+        "minPrice": 50,
+        "businessDay": "20241105",
+        "securityType": "05"
+      }
+    }
+  ]
+}

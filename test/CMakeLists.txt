@@ -4,6 +4,9 @@ set(MBO_TEST_SOURCES
     test_auction.cpp
     test_venue.cpp
     test_pcap_io.cpp
+    test_order_book.cpp
+    test_jpx_tick.cpp
+    test_pipeline.cpp
 )
 
 foreach(test_src ${MBO_TEST_SOURCES})

@@ -64,7 +64,31 @@ std::optional<uint64_t> extract_number_value(
     return std::stoull(block.substr(i, j - i));
 }
 
+std::optional<uint8_t> parse_security_type(const std::string& block) {
+    if (auto quoted = extract_quoted_value(block, "securityType")) {
+        const std::string& s = *quoted;
+        if (s.size() == 2 && s[0] == '0' && s[1] >= '1' && s[1] <= '4') {
+            return static_cast<uint8_t>(s[1] - '0');
+        }
+        if (s.size() == 1 && s[0] >= '1' && s[0] <= '4') {
+            return static_cast<uint8_t>(s[0] - '0');
+        }
+        return 0;
+    }
+    if (auto v = extract_number_value(block, "securityType")) {
+        if (*v >= 1 && *v <= 4) {
+            return static_cast<uint8_t>(*v);
+        }
+        return 0;
+    }
+    return std::nullopt;
+}
+
 }  // namespace
+
+bool VenueStore::is_stock_security_type(uint8_t security_type) {
+    return security_type >= 1 && security_type <= 4;
+}
 
 bool VenueStore::load(const std::string& path, std::string& error) {
     const std::string content = read_file(path, error);
@@ -99,6 +123,12 @@ bool VenueStore::load(const std::string& path, std::string& error) {
         if (auto v = extract_number_value(block, "tickSizeTable")) {
             inst.tick_size_table = static_cast<uint32_t>(*v);
         }
+        if (auto v = extract_number_value(block, "unitOfTrading")) {
+            inst.unit_of_trading = *v;
+        }
+        if (auto st = parse_security_type(block)) {
+            inst.security_type = *st;
+        }
         if (auto v = extract_number_value(block, "basePrice")) {
             inst.base_price_yen = *v;
         }
@@ -132,6 +162,28 @@ std::vector<std::string> VenueStore::symbols_for_channel(uint32_t channel) const
     std::vector<std::string> out;
     for (const auto& [sym, inst] : instruments_) {
         if (inst.multicast_group == channel) {
+            out.push_back(sym);
+        }
+    }
+    std::sort(out.begin(), out.end());
+    return out;
+}
+
+std::vector<std::string> VenueStore::stock_symbols_for_channel(uint32_t channel) const {
+    std::vector<std::string> out;
+    for (const auto& [sym, inst] : instruments_) {
+        if (inst.multicast_group == channel && inst.is_stock()) {
+            out.push_back(sym);
+        }
+    }
+    std::sort(out.begin(), out.end());
+    return out;
+}
+
+std::vector<std::string> VenueStore::all_stock_symbols() const {
+    std::vector<std::string> out;
+    for (const auto& [sym, inst] : instruments_) {
+        if (inst.is_stock()) {
             out.push_back(sym);
         }
     }

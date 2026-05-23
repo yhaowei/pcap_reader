@@ -111,6 +111,13 @@ int main() {
     AuctionResult unknown = compute_indicative_auction("UNKNOWN", book, nullptr);
     expect(!unknown.valid, "unknown symbol should be invalid");
 
+    IssueOrderBook market_book("TEST");
+    add_order_raw(market_book, 40, 'B', kMarketPrice, 100);
+    add_order(market_book, 41, 'S', 100, 100);
+    AuctionResult market = compute_indicative_auction("TEST", market_book, inst);
+    expect(market.valid, "market bid with limit ask should be valid");
+    expect(market.iav > 0, "market order book produces volume");
+
     std::cout << "test_auction: all passed\n";
     return 0;
 }
