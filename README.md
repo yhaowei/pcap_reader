@@ -3,7 +3,7 @@
 ## 1. which OS and version you use
 
 ```
-The project is built with cursor on windows 10
+The project is built with cursor on windows 10, so the AI model is combination of Opus 4.7, Sonnet 4.6, Codex 5.3, GPT-5.5, Composer 2.5
 ```
 
 ## 2.	which compiler and version you use,
@@ -64,11 +64,13 @@ Please refer Command line section bellow
 ```
 It supports loading multiple PCAPs files and large PCAP files
 
+Multiple files would be merged during loading(Refer details in bellow Command Line section)
+
 Loading progress is visible
 
 Besides CSV file, IAP/IAV result is also visible on Python GUI
 
-The latest order book will be displayed When sybmol selected
+The latest order book will be displayed on GUI when sybmol selected in the dropdown list
 
 There are test cases created for venue load funtion, pcap load function and calculation function
 ```
