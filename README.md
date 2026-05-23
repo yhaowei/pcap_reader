@@ -46,7 +46,7 @@ g++ $flags test/test_pcap_io.cpp build/source/libmbo_core.a -o build/test/test_p
 ## 4.	how to run your program,
 
 ```
-Run with Python GUI
+Run with Python GUI : python auction_gui.py
 
 specify json file
 specify single pcap file/folder
@@ -64,7 +64,7 @@ Please refer Command line section bellow
 ```
 It supports loading multiple PCAPs files and large PCAP files
 
-Multiple files would be merged during loading(Refer details in bellow Command Line section)
+Multiple files would be merged during loading(refer details in bellow Command Line section)
 
 Loading progress is visible
 
